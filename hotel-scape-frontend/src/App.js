@@ -10,6 +10,7 @@ import Home from './Home.js';
 import Hotel from './Hotel.js';
 import CreateHotel from './CreateHotel';
 import HotelNavbar from './HotelNavbar';
+import Footer from './Footer';
 
 
 function App() {
@@ -27,10 +28,12 @@ function App() {
           <Route exact path="/hotels/new">
             <CreateHotel />
           </Route>
-          <Route exact path="/hotels/:id">
+          <Route exact path="/hotels/:slug">
            <Hotel />
           </Route>
         </Switch>
+
+        <Footer />
       </div>
     </Router>
   );
