@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from "react";
 import {Link} from 'react-router-dom';
 import HotelHeader from "./HotelHeader";
+import {connect} from 'react-redux';
+import { getHotels } from './store';
 
-function Home() {
-  const [hotels, setHotels] = useState([]);
-  
+function Home({hotels, getHotels}) {
+
   useEffect(() => {
-    const promise = fetch("/api/v1/hotels");
-    promise
-      .then((response) => response.json())
-      .then((resp) => {
-        setHotels(resp.data);
-      })
-      .catch((resp) => {
-        console.log(resp);
-      });
+    getHotels();
   }, []);
 
   const list = hotels.map((item) => {
@@ -26,7 +19,8 @@ function Home() {
   return (
     <div>
       <HotelHeader />
-      <h2>Home - All Hotels</h2>
+      <h4 class="ui teal header">Home - All Hotels</h4>
+      
       <div className="grid">
         <ul> {list} </ul>
       </div>
@@ -34,4 +28,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default connect(state => ({hotels: state.hotels}), {getHotels})(Home);
