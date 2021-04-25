@@ -1,13 +1,51 @@
 import React from "react";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 function CreateHotel() {
+  const [hotelName, setHotelName] = useState("");
+  const [hotelImgUrl, setHotelImgUrl] = useState("");
+  const history = useHistory();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetch("/api/v1/hotels", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        hotel: {
+          name: hotelName,
+          image_url: hotelImgUrl,
+        },
+      }),
+    })
+      .then((resp) => resp.json())
+      .then((respJSON) => {
+        history.push("/");
+      });
+  };
+
   return (
     <div>
+      <h1>Create a Hotel</h1>
       <form>
-        <h1>Create a Hotel</h1>
-        <p>Enter Hotel Name:</p>
-        <input type="text" />
-        <input type="submit" />
+        <label for="name">Hotel Name:</label>
+        <input
+          type="text"
+          value={hotelName}
+          onChange={(e) => setHotelName(e.target.value)}
+          name="name"
+        />
+        <label for="image_url">Image Url:</label>
+        <input
+          type="text"
+          value={hotelImgUrl}
+          onChange={(e) => setHotelImgUrl(e.target.value)}
+          name="image_url"
+        />
+        <input type="submit" onClick={handleSubmit} />
       </form>
     </div>
   );
