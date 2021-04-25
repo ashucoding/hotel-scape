@@ -1,37 +1,30 @@
 import { React, useEffect, useState } from "react";
-
+import HotelCard from './HotelCard';
 import { Link, useParams } from "react-router-dom";
+import { connect } from 'react-redux';
+import { getHotels } from './store';
 
-function Hotel() {
-  const [hotel, setHotel] = useState(null);
+
+function Hotel({ hotels, getHotels }) {
   const params = useParams();
+  const [hotel, setHotel] = useState(null);
+
   useEffect(() => {
-    fetch(`/api/v1/hotels/${params.slug}`)
-      .then((resp) => resp.json())
-      .then((respJSON) => {
-        setHotel(respJSON.data);
-      });
+    getHotels();
   }, [params.id]);
+
+  useEffect(() => {
+    const found_hotel = hotels.find(hotel => hotel.attributes.slug === params.slug);
+    setHotel(found_hotel);
+  }, [hotels]);
 
   return (
     <div>
-      
       {hotel && (
-        <div className="hotel_card">
-          <div className="hotel_logo">
-            <img src={hotel.attributes.image_url} alt={hotel.name} />
-          </div>
-
-          <h2 className="hotel_name">{hotel.attributes.name}</h2>
-
-          <div className="hotel_score">Score: {hotel.attributes.avg_score}</div>
-
-          <h2>Hotel Reviews</h2>
-
-        </div>
+        <HotelCard hotel={hotel}/>
       )}
     </div>
   );
 }
 
-export default Hotel;
+export default connect(state => ({ hotels: state.hotels }), {getHotels})(Hotel);
