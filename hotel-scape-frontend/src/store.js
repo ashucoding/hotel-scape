@@ -24,6 +24,21 @@ export function getHotels() {
     };
 }
 
+export function createHotel(hotelAttributes) {
+    return (dispatch) => {
+        return fetch("/api/v1/hotels", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              hotel: hotelAttributes,
+            }),
+          })
+        .then((resp) => resp.json());
+    }
+}
+
 // reducers
 export function hotels(state = [], action) {
     switch (action.type) {

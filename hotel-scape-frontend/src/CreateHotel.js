@@ -1,30 +1,20 @@
 import React from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import {connect} from 'react-redux';
+import {createHotel} from './store';
 
-function CreateHotel() {
+function CreateHotel({createHotel}) {
   const [hotelName, setHotelName] = useState("");
   const [hotelImgUrl, setHotelImgUrl] = useState("");
   const history = useHistory();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch("/api/v1/hotels", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        hotel: {
-          name: hotelName,
-          image_url: hotelImgUrl,
-        },
-      }),
-    })
-      .then((resp) => resp.json())
-      .then((respJSON) => {
-        history.push("/");
-      });
+    createHotel({name: hotelName, image_url: hotelImgUrl})
+    .then(() => {
+      history.push("/");
+    });
   };
 
   return (
@@ -51,4 +41,4 @@ function CreateHotel() {
   );
 }
 
-export default CreateHotel;
+export default connect(null, {createHotel})(CreateHotel);
