@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import HotelHeader from "./HotelHeader";
 import {connect} from 'react-redux';
 import { getHotels } from './store';
+import HotelRow from './HotelRow';
 
 function Home({hotels, getHotels}) {
 
@@ -10,10 +11,8 @@ function Home({hotels, getHotels}) {
     getHotels();
   }, []);
 
-  const list = hotels.map((item) => {
-    return <li key={item.attributes.name}>
-      <Link to={`hotels/${item.attributes.slug}`}>{item.attributes.name}</Link>
-      </li>;
+  const list = hotels.map((hotel) => {
+    return <HotelRow hotel={hotel}/>;
   });
 
   return (
