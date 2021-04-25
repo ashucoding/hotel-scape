@@ -1,33 +1,37 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import { React, useEffect, useState } from "react";
 
-function Hotel(props) {
+import { Link, useParams } from "react-router-dom";
 
-    var props = {attributes: {
-        id: 1,
-        name: "Fake Hotel",
-        image_url: "",
-        avg_score: "5",
-        slug: "fake-hotel"
-    }};
-    return (
-        <div>
-            <h2>Hotel Reviews</h2>
-            <div className="hotel_card">
-                <div className="hotel_logo">
-                    <img src={props.attributes.image_url} alt={props.attributes.name}/>
-                </div>
+function Hotel() {
+  const [hotel, setHotel] = useState(null);
+  const params = useParams();
+  useEffect(() => {
+    fetch(`/api/v1/hotels/${params.slug}`)
+      .then((resp) => resp.json())
+      .then((respJSON) => {
+        setHotel(respJSON.data);
+      });
+  }, [params.id]);
 
-                <h2 className="hotel_name">{props.attributes.name}</h2>
+  return (
+    <div>
+      
+      {hotel && (
+        <div className="hotel_card">
+          <div className="hotel_logo">
+            <img src={hotel.attributes.image_url} alt={hotel.name} />
+          </div>
 
-                <div className="hotel_score">Score: {props.attributes.avg_score}</div>
+          <h2 className="hotel_name">{hotel.attributes.name}</h2>
 
-                <div className="hotel_link"> 
-                    <Link to={`/hotels/${props.attributes.slug}`}>View Hotels</Link>
-                </div>
-            </div>
+          <div className="hotel_score">Score: {hotel.attributes.avg_score}</div>
+
+          <h2>Hotel Reviews</h2>
+
         </div>
-    )
-};
+      )}
+    </div>
+  );
+}
 
 export default Hotel;
