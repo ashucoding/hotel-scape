@@ -1,10 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const FooterStyle = styled.div`
+background-color: #F1F1F1;
+  text-align: center;
+  padding: 10px;
+`
 
 function Footer() {
     return(
-        <footer class="footer">
+        <FooterStyle>
             Hotel Scape 2021
-        </footer>
+        </FooterStyle>
     )
 }
 

@@ -3,11 +3,30 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import {connect} from 'react-redux';
 import {createHotel} from './store';
+import styled from "styled-components";
+
+const FormHeader = styled.div`
+text-align:center;
+display: flex;
+background-color: #ff6f69;
+white-space: normal;
+font-weight: 700;
+font-size: 100px;
+padding: 100px;
+margin: -75px;
+`
+
+const Form = styled.form`
+display: center;
+width: auto;
+padding: 200px 0 200px 0;
+`;
 
 function CreateHotel({createHotel}) {
   const [hotelName, setHotelName] = useState("");
   const [hotelImgUrl, setHotelImgUrl] = useState("");
   const history = useHistory();
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -19,8 +38,8 @@ function CreateHotel({createHotel}) {
 
   return (
     <div>
-      <h1>Create a Hotel</h1>
-      <form>
+      <Form>
+      <FormHeader>Create a Hotel</FormHeader>
         <label for="name">Hotel Name:</label>
         <input
           type="text"
@@ -36,9 +55,10 @@ function CreateHotel({createHotel}) {
           name="image_url"
         />
         <input type="submit" onClick={handleSubmit} />
-      </form>
+      </Form>
     </div>
   );
 }
 
-export default connect(null, {createHotel})(CreateHotel);
+// export default CreateHotel;
+export default connect(null, { createHotel })(CreateHotel);

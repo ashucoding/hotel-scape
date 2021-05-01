@@ -62,3 +62,8 @@ export default function configureStore(initialState) {
         applyMiddleware(thunk)
     )
 }
+
+
+// state: {
+//     hotels: [{name: "hilton"}, {}, {}]
+// }

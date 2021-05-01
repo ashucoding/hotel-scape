@@ -1,9 +1,8 @@
 import { React, useEffect, useState } from "react";
-import HotelCard from './HotelCard';
+import HotelShow from './HotelShow';
 import { Link, useParams } from "react-router-dom";
 import { connect } from 'react-redux';
 import { getHotels } from './store';
-
 
 function Hotel({ hotels, getHotels }) {
   const params = useParams();
@@ -11,7 +10,7 @@ function Hotel({ hotels, getHotels }) {
 
   useEffect(() => {
     getHotels();
-  }, [params.id]);
+  }, [params.slug]);
 
   useEffect(() => {
     const found_hotel = hotels.find(hotel => hotel.attributes.slug === params.slug);
@@ -21,7 +20,7 @@ function Hotel({ hotels, getHotels }) {
   return (
     <div>
       {hotel && (
-        <HotelCard hotel={hotel}/>
+        <HotelShow hotel={hotel}/>
       )}
     </div>
   );

@@ -33,7 +33,7 @@ a{
 }
 `
 
-function HotelCard({ hotel }) {
+function HotelShow({ hotel }) {
   return (
     <Card>
       <HotelLogo>
@@ -42,11 +42,11 @@ function HotelCard({ hotel }) {
 
       <HotelName>{hotel.attributes.name}</HotelName>
 
-      <h2><Link to={`hotels/${hotel.attributes.slug}`}>
-      View Hotel
+      <h2><Link to={`/`}>
+      View All Hotels
       </Link></h2>
     </Card>
   );
 }
 
-export default HotelCard;
+export default HotelShow;
